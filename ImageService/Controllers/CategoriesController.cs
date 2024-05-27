@@ -90,11 +90,9 @@ namespace ImageService.Controllers
             {
                 return NotFound();
             }
-
-            // Remove all related ImageCategories
+            
             _context.ImageCategories.RemoveRange(category.ImageCategories);
-
-            // Remove the category itself
+            
             _context.Categories.Remove(category);
 
             await _context.SaveChangesAsync();

@@ -97,12 +97,10 @@ namespace ImageService.Controllers
             {
                 return NotFound("User not found.");
             }
-
-            // Generate a unique file name
+            
             var fileName = Path.GetRandomFileName();
             var filePath = Path.Combine(_imageDirectory, fileName);
-
-            // Save the file to the file system
+            
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
@@ -118,8 +116,7 @@ namespace ImageService.Controllers
 
             _context.Images.Add(image);
             await _context.SaveChangesAsync();
-
-            // Save the categories
+            
             foreach (var categoryId in categoryIds)
             {
                 var category = await _context.Categories.FindAsync(categoryId);
@@ -156,25 +153,21 @@ namespace ImageService.Controllers
             {
                 return NotFound();
             }
-
-            // Ensure the user exists
+            
             var user = await _context.Users.FindAsync(userId);
             if (user == null)
             {
                 return NotFound("User not found.");
             }
-
-            // Handle file upload
+            
             if (file != null && file.Length > 0)
             {
-                // Delete the old file if it exists
                 var oldFilePath = Path.Combine(_imageDirectory, image.FilePath);
                 if (System.IO.File.Exists(oldFilePath))
                 {
                     System.IO.File.Delete(oldFilePath);
                 }
-
-                // Save the new file
+                
                 var newFileName = Path.GetRandomFileName();
                 var newFilePath = Path.Combine(_imageDirectory, newFileName);
 
@@ -182,21 +175,16 @@ namespace ImageService.Controllers
                 {
                     await file.CopyToAsync(stream);
                 }
-
-                // Update the file path in the image entity
+                
                 image.FilePath = newFileName;
             }
-
-            // Update other properties
+            
             image.Description = description;
             image.UserId = userId;
             image.User = user;
-
-            // Update categories
-            // Remove old categories
+            
             _context.ImageCategories.RemoveRange(image.ImageCategories);
-
-            // Add new categories
+            
             foreach (var categoryId in categoryIds)
             {
                 var category = await _context.Categories.FindAsync(categoryId);
@@ -247,23 +235,18 @@ namespace ImageService.Controllers
                 return NotFound();
             }
             
-            // Delete the file from the file system
             var filePath = Path.Combine(_imageDirectory, image.FilePath);
             if (System.IO.File.Exists(filePath))
             {
                 System.IO.File.Delete(filePath);
             }
-
-            // Delete all related likes
+            
             _context.Likes.RemoveRange(image.Likes);
-
-            // Delete all related saved images
+            
             _context.SavedImages.RemoveRange(image.SavedImages);
-
-            // Delete all related image categories
+            
             _context.ImageCategories.RemoveRange(image.ImageCategories);
-
-            // Delete the image itself
+            
             _context.Images.Remove(image);
 
             await _context.SaveChangesAsync();

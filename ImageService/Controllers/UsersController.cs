@@ -42,7 +42,6 @@ namespace ImageService.Controllers
         }
 
         // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
@@ -73,7 +72,6 @@ namespace ImageService.Controllers
         }
 
         // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
@@ -100,13 +98,11 @@ namespace ImageService.Controllers
 
             _context.SavedImages.RemoveRange(user.SavedImages);
             _context.Likes.RemoveRange(user.Likes);
-
-            // Find images created by the user
+            
             var userImages = await _context.Images
                 .Where(i => i.UserId == id)
                 .ToListAsync();
-
-            // Find ImageCategories associated with user's images and remove them
+            
             foreach (var image in userImages)
             {
                 var imageCategories = await _context.ImageCategories
@@ -115,8 +111,7 @@ namespace ImageService.Controllers
 
                 _context.ImageCategories.RemoveRange(imageCategories);
             }
-
-            // Remove the images themselves
+            
             _context.Images.RemoveRange(userImages);
             _context.Users.Remove(user);
 

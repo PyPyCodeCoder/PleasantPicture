@@ -49,7 +49,6 @@ namespace ImageService.Controllers
         }
 
         // PUT: api/Likes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutLike(int id, Like like)
         {
@@ -80,7 +79,6 @@ namespace ImageService.Controllers
         }
 
         // POST: api/Likes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Like>> PostLike(Like like)
         {

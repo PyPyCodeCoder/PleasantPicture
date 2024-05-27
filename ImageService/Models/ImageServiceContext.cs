@@ -31,7 +31,7 @@ namespace ImageService.Models
                 .HasOne(i => i.User)
                 .WithMany(u => u.Images)
                 .HasForeignKey(i => i.UserId)
-                .OnDelete(DeleteBehavior.Restrict); // Prevent multiple cascade paths
+                .OnDelete(DeleteBehavior.Restrict);
 
             // Configure the many-to-many relationship between Image and Category
             modelBuilder.Entity<ImageCategory>()
