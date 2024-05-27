@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main - Pleasant Picture</title>
+    <link rel="stylesheet" href="css/site.css" />
+    <style>
+        input[type="text"], input[type="submit"], button, select {
+            border-radius: 15px;
+            border: 20px #ff8a59;
+            background-color: #ffb088;
+            color: black;
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover, button:hover {
+            background-color: #ff8a59;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="Index.html">Home</a></li>
+                <li><a href="Users.html">Users</a></li>
+                <li><a href="Categories.html">Categories</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <select id="userDropdown" onchange="getUserData()">
+        <option value="">Select a user</option>
+    </select>
+    
+    <div id="userActions">
+        <button onclick="showImages()">Images</button>
+        <button onclick="showSavedImages()">Saved Images</button>
+    </div>
+    
+    <div id="content"></div>
+    
+    <script src="js/main.js"></script>
+    <script type="text/javascript">
+        populateUserDropdown();
+    </script>
+</body>
+</html>
